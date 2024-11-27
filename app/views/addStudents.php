@@ -22,8 +22,8 @@ if(isset($_POST['send'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajout d'un apprenant</title>
-    <link rel="stylesheet" href="../output.css">
+    <title>Ajouter un apprenant</title>
+    <link rel="stylesheet" href="../../public/output.css">
 </head>
 <body class="bg-[#BABABA]">
      <div class="container flex md:flex-row flex-col w-3/4 bg-white gap-1 mx-auto my-20">
@@ -79,7 +79,7 @@ if(isset($_POST['send'])){
             <button class="text-white md:ml-[68%] mx-auto bg-[#342E37] p-3 w-1/5" type="submit" name="send">Ajouter</button>
         </form>
         <div class="md:w-1/2 w-full p-10 bg-[#342E37] flex justify-center items-center">
-            <h2 class="text-3xl font-bold text-red-500 md:mt-28 my-28 text-center">Ajouter un apprenant</h2>
+            <h2 class="text-3xl font-bold text-white md:mt-28 my-28 text-center">Ajouter un apprenant</h2>
         </div>
      </div>
 </body>

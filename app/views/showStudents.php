@@ -1,6 +1,22 @@
 <?php 
+include ('../models/postHistoryAttendance.php');
 include_once ('../controllers/presenceControllers.php');
 $apprenants = showStudentsController();
+
+
+if(isset($_POST['submit'])){
+    if(
+        !isset($_POST['id_apprenant']) || !isset($_POST['statuts'])
+    ){
+        echo 'Remplir le formulaire.';
+        return;
+    }
+    
+    $id_apprenant = $_POST['id_apprenant'];
+    $statuts = $_POST['statuts'];
+
+    postHistoryAttendance($id_apprenant, $statuts);
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,15 +25,15 @@ $apprenants = showStudentsController();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste de présence</title>
-    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="../../public/output.css">
 </head>
 <body class="bg-gray-50">
     <header class="bg-stone-500 h-16 p-5">
         <nav>
             <ul class="flex justify-center items-center gap-4 text-white">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="pages/historique.php">Historique</a></li>
-                <li><a href="pages/ajout.php">Ajout</a></li>
+                <li><a href="showStudents.php">Home</a></li>
+                <li><a href="historyAttendance.php">Historique</a></li>
+                <li><a href="addStudents.php">Ajout</a></li>
             </ul>
         </nav>
     </header>
@@ -39,12 +55,12 @@ $apprenants = showStudentsController();
                         </form>
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        <button type="button" class="flex items-center justify-center text-white bg-stone-500 hover:bg-stone-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                        <a href="addStudents.php" type="button" class="flex items-center justify-center text-white bg-stone-500 hover:bg-stone-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                             </svg>
                             Ajouter
-                        </button>                        
+                        </a>                        
                         <select id="filterDropdownButton" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
                             <option value="">
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-4 w-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
@@ -64,11 +80,16 @@ $apprenants = showStudentsController();
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
+                                <th scope="col" class="px-4 py-3">Id</th>
                                 <th scope="col" class="px-4 py-3">Prenom</th>
                                 <th scope="col" class="px-4 py-3">Nom</th>
                                 <th scope="col" class="px-4 py-3">Email</th>
                                 <th scope="col" class="px-4 py-3">Telephone</th>
                                 <th scope="col" class="px-4 py-3">Cohorte</th>
+                                <th scope="col" class="px-4 py-3">Satuts</th>
+                                <th scope="col" class="px-4 py-3">
+                                    <span class="sr-only">Submit</span>
+                                </th>
                                 <th scope="col" class="px-4 py-3">
                                     <span class="sr-only">Actions</span>
                                 </th>
@@ -77,11 +98,22 @@ $apprenants = showStudentsController();
                         <tbody>
                         <?php foreach ($apprenants as $apprenant):?>
                             <tr class="border-b dark:border-gray-700">
+                                <form action="showStudents.php" method="post">
+                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><input type="text" name="id_apprenant" value="<?php echo $apprenant['id']; ?>" class="hidden"><?php echo $apprenant['id']; ?></th>
                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $apprenant['prenom']; ?></th>
                                 <td class="px-4 py-3"><?php echo $apprenant['nom']; ?></td>
                                 <td class="px-4 py-3"><?php echo $apprenant['email']; ?></td>
                                 <td class="px-4 py-3"><?php echo $apprenant['telephone']; ?></td>
                                 <td class="px-4 py-3"><?php echo $apprenant['cohorte']; ?></td>
+                                <td class="px-4 py-3">
+                                    <select name="statuts" id="" class="border-none" required>
+                                        <option value="">Prés.../Abs...</option>
+                                        <option value="presence">Presence</option>
+                                        <option value="absence">Absence</option>
+                                    </select>
+                                </td>
+                                <td><button type="submit" name="submit">Submit</button></td>
+                                </form>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="<?php echo $apprenant['id']; ?>" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -109,6 +141,6 @@ $apprenants = showStudentsController();
                 </div>
         </div>
         </section>
-    <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
 </body>
 </html>
