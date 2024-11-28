@@ -2,7 +2,7 @@
     include_once "db.php";
     function historyAttendance(){
         $pdo = connect();
-        $sqlQuery = 'SELECT apprenants.prenom, apprenants.nom, apprenants.email, apprenants.telephone, apprenants.cohorte, presences.statuts 
+        $sqlQuery = 'SELECT apprenants.prenom, apprenants.nom, apprenants.email, apprenants.telephone, apprenants.cohorte, presences.statuts, presences.date_presence 
              FROM presences 
              JOIN apprenants ON presences.id_apprenant = apprenants.id 
              ';

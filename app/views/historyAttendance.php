@@ -68,6 +68,7 @@ $apprenants = historyAttendanceController();
                                 <th scope="col" class="px-4 py-3">Telephone</th>
                                 <th scope="col" class="px-4 py-3">Cohorte</th>
                                 <th scope="col" class="px-4 py-3">Satuts</th>
+                                <th scope="col" class="px-4 py-3">Date/Heure</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -79,6 +80,7 @@ $apprenants = historyAttendanceController();
                                     <td class="px-4 py-3"><?php echo $apprenant['telephone']; ?></td>
                                     <td class="px-4 py-3"><?php echo $apprenant['cohorte']; ?></td>
                                     <td class="px-4 py-3"><?php echo $apprenant['statuts']; ?></td>
+                                    <td class="px-4 py-3"><?php echo $apprenant['date_presence']; ?></td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>

@@ -14,8 +14,9 @@ if(isset($_POST['submit'])){
     
     $id_apprenant = $_POST['id_apprenant'];
     $statuts = $_POST['statuts'];
+    $date_presence = date('Y-m-d H:i:s');
 
-    postHistoryAttendance($id_apprenant, $statuts);
+    postHistoryAttendance($id_apprenant, $statuts, $date_presence);
     header("Location: showStudents.php"); 
 }
 ?>
