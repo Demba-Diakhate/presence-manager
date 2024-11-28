@@ -12,7 +12,8 @@ if(isset($_POST['send'])){
     $email = $_POST['email'];
     $telephone = $_POST['telInput'];
     $cohorte = $_POST['cohorte'];
-    addStudentsController($prenom,$nom,$email,$cohorte,$telephone);
+    addStudentsController($prenom,$nom,$email,$telephone,$cohorte);
+    header("Location: showStudents.php");
 }
 ?>
 
@@ -70,7 +71,8 @@ if(isset($_POST['send'])){
             </div>    
             <div class="flex gap-3 mx-auto">
                 <div>
-                   <select name="cohorte" id="cohorte" class="border border-black p-0.5 rounded-lg">
+                   <select name="cohorte" id="cohorte" class="border border-black p-0.5 rounded-lg" required>
+                        <option value="">Choisir un cohorte</option>
                         <option value="cohorte1">Cohorte 1</option>
                         <option value="cohorte2">Cohorte 2</option>
                    </select>

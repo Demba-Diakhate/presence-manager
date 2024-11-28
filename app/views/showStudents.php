@@ -16,6 +16,7 @@ if(isset($_POST['submit'])){
     $statuts = $_POST['statuts'];
 
     postHistoryAttendance($id_apprenant, $statuts);
+    header("Location: showStudents.php"); 
 }
 ?>
 

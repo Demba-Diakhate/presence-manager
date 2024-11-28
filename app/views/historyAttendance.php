@@ -1,4 +1,8 @@
+<?php 
+include_once ('../controllers/presenceControllers.php');
+$apprenants = historyAttendanceController();
 
+?>
 
 
 
@@ -74,12 +78,7 @@
                                     <td class="px-4 py-3"><?php echo $apprenant['email']; ?></td>
                                     <td class="px-4 py-3"><?php echo $apprenant['telephone']; ?></td>
                                     <td class="px-4 py-3"><?php echo $apprenant['cohorte']; ?></td>
-                                    <td class="px-4 py-3">
-                                        <select name="status" id="" class="border-none">
-                                            <option value="presence">Presence</option>
-                                            <option value="absence">Absence</option>
-                                        </select>
-                                    </td>
+                                    <td class="px-4 py-3"><?php echo $apprenant['statuts']; ?></td>
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
