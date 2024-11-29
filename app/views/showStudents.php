@@ -101,20 +101,20 @@ if(isset($_POST['submit'])){
                         <?php foreach ($apprenants as $apprenant):?>
                             <tr class="border-b dark:border-gray-700">
                                 <form action="showStudents.php" method="post">
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><input type="text" name="id_apprenant" value="<?php echo $apprenant['id']; ?>" class="hidden"><?php echo $apprenant['id']; ?></th>
-                                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $apprenant['prenom']; ?></th>
-                                <td class="px-4 py-3"><?php echo $apprenant['nom']; ?></td>
-                                <td class="px-4 py-3"><?php echo $apprenant['email']; ?></td>
-                                <td class="px-4 py-3"><?php echo $apprenant['telephone']; ?></td>
-                                <td class="px-4 py-3"><?php echo $apprenant['cohorte']; ?></td>
-                                <td class="px-4 py-3">
-                                    <select name="statuts" id="" class="border-none" required>
-                                        <option value="">Prés.../Abs...</option>
-                                        <option value="presence">Presence</option>
-                                        <option value="absence">Absence</option>
-                                    </select>
-                                </td>
-                                <td><button type="submit" name="submit">Submit</button></td>
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><input type="text" name="id_apprenant" value="<?php echo $apprenant['id']; ?>" class="hidden"><?php echo $apprenant['id']; ?></th>
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $apprenant['prenom']; ?></th>
+                                    <td class="px-4 py-3"><?php echo $apprenant['nom']; ?></td>
+                                    <td class="px-4 py-3"><?php echo $apprenant['email']; ?></td>
+                                    <td class="px-4 py-3"><?php echo $apprenant['telephone']; ?></td>
+                                    <td class="px-4 py-3"><?php echo $apprenant['cohorte']; ?></td>
+                                    <td class="px-4 py-3">
+                                        <select name="statuts" id="" class="border-none" required>
+                                            <option value="">Prés.../Abs...</option>
+                                            <option value="presence">Presence</option>
+                                            <option value="absence">Absence</option>
+                                        </select>
+                                    </td>
+                                    <td><button type="submit" name="submit">Submit</button></td>
                                 </form>
                                 <td class="px-4 py-3 flex items-center justify-end">
                                     <button id="apple-imac-27-dropdown-button" data-dropdown-toggle="<?php echo $apprenant['id']; ?>" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
@@ -128,11 +128,11 @@ if(isset($_POST['submit'])){
                                                 <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
                                             </li>
                                             <li>
-                                                <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                <a href="updateStudents.php?id=<?php echo $apprenant['id']; ?>" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Modifier</a>
                                             </li>
                                         </ul>
                                         <div class="py-1">
-                                            <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                                            <a href="delete.php?id=<?php echo $apprenant['id']; ?>" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Supprimer</a>
                                         </div>
                                     </div>
                                 </td>

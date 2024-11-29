@@ -18,5 +18,15 @@ function historyAttendanceController(){
     return $apprenants;
 }
 
+function updateStudentsController(){
+    $getData = $_GET;
+
+    if (!isset($getData['id']) || !is_numeric($getData['id'])) {
+        echo('Il faut un identifiant pour la modification.');
+        return;
+    }
+
+    return $id_update = $getData['id'];
+}
 
 ?>
