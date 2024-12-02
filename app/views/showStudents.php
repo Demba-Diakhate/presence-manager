@@ -30,6 +30,7 @@ try {
 $search = $_GET['search'] ?? '';
 $filter = $_GET['type_cohorte'] ?? '';
 // var_dump($filter);
+
 $sql = "SELECT * FROM apprenants WHERE 1";
 
 if ($search) {
@@ -40,12 +41,8 @@ if ($filter) {
 }
 
 $sql .= " ORDER BY nom ASC, prenom ASC ";
-// if ($filter) {
-//     $sql .= " AND niveau = '$filter'";
-// }
 
 $result = $pdo->query($sql);
-// var_dump($result);
 
 ?>
 
