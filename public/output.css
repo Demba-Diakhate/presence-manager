@@ -1582,11 +1582,6 @@ input:checked + .toggle-bg {
   background-color: rgb(255 255 255 / 0.5);
 }
 
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 82 82 / var(--tw-bg-opacity, 1));
-}
-
 .p-0\.5 {
   padding: 0.125rem;
 }
@@ -1758,16 +1753,6 @@ input:checked + .toggle-bg {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.text-green-100 {
-  --tw-text-opacity: 1;
-  color: rgb(222 247 236 / var(--tw-text-opacity, 1));
-}
-
-.text-green-500 {
-  --tw-text-opacity: 1;
-  color: rgb(14 159 110 / var(--tw-text-opacity, 1));
-}
-
 .opacity-0 {
   opacity: 0;
 }
@@ -1792,11 +1777,6 @@ input:checked + .toggle-bg {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.outline-none {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
 }
 
 .outline {
@@ -1883,11 +1863,6 @@ input:checked + .toggle-bg {
 
 .focus\:z-10:focus {
   z-index: 10;
-}
-
-.focus\:text-green-600:focus {
-  --tw-text-opacity: 1;
-  color: rgb(5 122 85 / var(--tw-text-opacity, 1));
 }
 
 .focus\:outline-none:focus {
