@@ -33,7 +33,7 @@ if(isset($_POST['send'])){
                 <label for="name">Prenom</label>
                 <input 
                     type="text" 
-                    class="p-3 bg-[#BABABA]"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     name="firstNameInput" 
                     id="firstNameInput"
                     required
@@ -43,7 +43,7 @@ if(isset($_POST['send'])){
                 <label for="name">Nom</label>
                 <input 
                     type="text" 
-                    class="p-3 bg-[#BABABA]"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     name="lastNameInput" 
                     id="lastNameInput"
                     required
@@ -53,7 +53,7 @@ if(isset($_POST['send'])){
                 <label for="name">Email</label>
                 <input 
                     type="email" 
-                    class="p-3 bg-[#BABABA]"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     name="email" 
                     id="email"
                     required
@@ -62,8 +62,8 @@ if(isset($_POST['send'])){
             <div class="prenom flex flex-col w-3/4 md:mx-left mx-auto bg-transparent">
                 <label for="name">Telephone</label>
                 <input 
-                    type="" 
-                    class="p-3 bg-[#BABABA]"
+                    type="text" 
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     name="telInput" 
                     id="telInput"
                     required
@@ -71,16 +71,16 @@ if(isset($_POST['send'])){
             </div>    
             <div class="flex gap-3 mx-auto">
                 <div>
-                   <select name="cohorte" id="cohorte" class="border border-black p-0.5 rounded-lg" required>
+                   <select name="cohorte" id="cohorte" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"" required>
                         <option value="">Choisir un cohorte</option>
                         <option value="cohorte1">Cohorte 1</option>
                         <option value="cohorte2">Cohorte 2</option>
                    </select>
                 </div>
             </div>
-            <button class="text-white md:ml-[68%] mx-auto bg-[#342E37] p-3 w-1/5" type="submit" name="send">Ajouter</button>
+            <button class="text-white md:ml-[68%] mx-auto bg-stone-500 p-3 w-1/5" type="submit" name="send">Ajouter</button>
         </form>
-        <div class="md:w-1/2 w-full p-10 bg-[#342E37] flex justify-center items-center">
+        <div class="md:w-1/2 w-full p-10 bg-stone-500 flex justify-center items-center">
             <h2 class="text-3xl font-bold text-white md:mt-28 my-28 text-center">Ajouter un apprenant</h2>
         </div>
      </div>

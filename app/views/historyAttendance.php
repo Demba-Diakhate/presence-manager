@@ -2,6 +2,31 @@
 include_once ('../controllers/presenceControllers.php');
 $apprenants = historyAttendanceController();
 
+
+try {
+    $pdo = new PDO('mysql:host=127.0.0.1;dbname=app_gestion_presence', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Connection failed: ' . $e->getMessage());
+}
+// Recherche et filtre
+$search = $_GET['search'] ?? '';
+$filter = $_GET['filter'] ?? '';
+
+$sql = "SELECT apprenants.prenom, apprenants.nom, apprenants.email, apprenants.telephone, apprenants.cohorte, presences.statuts, presences.date_save 
+        FROM presences
+        JOIN apprenants ON presences.id_apprenant = apprenants.id  WHERE 1";
+
+if ($search) {
+    $sql .= " AND (apprenants.nom LIKE '%$search%' OR apprenants.prenom LIKE '%$search%' OR apprenants.cohorte LIKE '%$search%' OR presences.date_save LIKE '%$search%')";
+}elseif (empty($search)) {
+    $sql;
+}
+
+$sql .= " ORDER BY apprenants.nom ASC, apprenants.prenom ASC ";
+
+$result = $pdo->query($sql);
+
 ?>
 
 
@@ -30,7 +55,7 @@ $apprenants = historyAttendanceController();
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
-                        <form class="flex items-center">
+                    <form class="flex md:space-x-3" method="get">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -38,8 +63,9 @@ $apprenants = historyAttendanceController();
                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                                <input type="text" id="simple-search" name="search" value="<?= htmlspecialchars($search) ?>"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" >
                             </div>
+                            <button type="submit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">Rechercher</button>
                         </form>
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
@@ -72,17 +98,29 @@ $apprenants = historyAttendanceController();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($apprenants as $apprenant):?>
-                                <tr class="border-b dark:border-gray-700">
-                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?php echo $apprenant['prenom']; ?></th>
-                                    <td class="px-4 py-3"><?php echo $apprenant['nom']; ?></td>
-                                    <td class="px-4 py-3"><?php echo $apprenant['email']; ?></td>
-                                    <td class="px-4 py-3"><?php echo $apprenant['telephone']; ?></td>
-                                    <td class="px-4 py-3"><?php echo $apprenant['cohorte']; ?></td>
-                                    <td class="px-4 py-3"><?php echo $apprenant['statuts']; ?></td>
-                                    <td class="px-4 py-3"><?php echo $apprenant['date_presence']; ?></td>
+                            <?php if ($result && $result->rowCount() > 0): ?>
+                                <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
+                                    <tr class="border-b dark:border-gray-700">
+                                <form action="showStudents.php" method="post">
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= htmlspecialchars($row['prenom']) ?></th>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($row['nom']) ?></td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($row['email']) ?></td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($row['telephone']) ?></td>
+                                    <td class="px-4 py-3"><?= htmlspecialchars($row['cohorte']) ?></td>                                    
+                                    <td class="px-4 py-3"><?= htmlspecialchars($row['statuts']) ?></td>                                    
+                                    <td class="px-4 py-3"><?= htmlspecialchars($row['date_save']) ?></td>                                    
+                                </form>
+                            </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr class="">
+                                    <td class=""></td>
+                                    <td class=""></td>
+                                    <td class=""></td>
+                                    <td class="text-center">Aucun résultat trouvé</td>
                                 </tr>
-                            <?php endforeach ?>
+                                
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
