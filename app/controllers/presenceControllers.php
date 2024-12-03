@@ -8,7 +8,7 @@ function showStudentsController(){
 function addStudentsController($prenom,$nom,$email,$telephone,$cohorte){       
          
     include_once('../models/addStudents.php');
-    addStudents($prenom,$nom,$email,$cohorte,$telephone);
+    addStudents($prenom,$nom,$email,$telephone,$cohorte);
 
 }
 

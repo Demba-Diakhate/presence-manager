@@ -76,7 +76,10 @@ $recipe = updateStudents($id_update);
                    </select>
                 </div>
             </div>
-            <button class="text-white md:ml-[68%] mx-auto bg-[#342E37] p-3 w-1/5" type="submit" name="send">Ajouter</button>
+            <div class="flex flex-row gap-3 justify-end mr-16">
+                <button class="text-white bg-[#342E37] font-bold p-3 w-1/5" type="submit" name="send">Modifier</button>
+                <a href="./showStudents.php" class="text-black border border-black font-bold p-3 w-1/5">Annuler</a>
+            </div>
         </form>
         <div class="md:w-1/2 w-full p-10 bg-[#342E37] flex justify-center items-center">
             <h2 class="text-3xl font-bold text-white md:mt-28 my-28 text-center">Ajouter un apprenant</h2>
