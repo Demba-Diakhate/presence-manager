@@ -71,16 +71,16 @@ if(isset($_POST['send'])){
             </div>    
             <div class="flex gap-3 mx-auto">
                 <div>
-                   <select name="cohorte" id="cohorte" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"" required>
+                   <select name="cohorte" id="cohorte" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-3 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
                         <option value="">Choisir un cohorte</option>
-                        <option value="cohorte1">Cohorte 1</option>
-                        <option value="cohorte2">Cohorte 2</option>
+                        <option value="Cohorte 1">Cohorte 1</option>
+                        <option value="Cohorte 2">Cohorte 2</option>
                    </select>
                 </div>
             </div>
             <!-- <button class="text-white md:ml-[68%] mx-auto bg-stone-500 p-3 w-1/5" type="submit" name="send">Ajouter</button> -->
             <div class="flex flex-row gap-3 justify-end mr-12">
-                <button class="text-white bg-[#342E37] font-bold p-3 w-1/5" type="submit" name="send">Ajouter</button>
+                <button class="text-white bg-stone-500 font-bold p-3 w-1/5" type="submit" name="send">Ajouter</button>
                 <a href="./showStudents.php" class="text-black border border-black font-bold p-3 w-1/5">Annuler</a>
             </div>
 

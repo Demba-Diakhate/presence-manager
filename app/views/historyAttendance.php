@@ -1,35 +1,27 @@
 <?php 
-include_once ('../controllers/presenceControllers.php');
-$apprenants = historyAttendanceController();
+// View all students attendenced
+
+// include_once ('../controllers/presenceControllers.php');
+// $apprenants = historyAttendanceController();
 
 
-try {
-    $pdo = new PDO('mysql:host=127.0.0.1;dbname=app_gestion_presence', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Connection failed: ' . $e->getMessage());
-}
-// Recherche et filtre
+// Search students attendances
 $search = $_GET['search'] ?? '';
-$filter = $_GET['filter'] ?? '';
+include_once ('../models/search.php');
+$result = searchHistoryAttendance($search);
+$result->execute();
 
-$sql = "SELECT apprenants.prenom, apprenants.nom, apprenants.email, apprenants.telephone, apprenants.cohorte, presences.statuts, presences.date_save 
-        FROM presences
-        JOIN apprenants ON presences.id_apprenant = apprenants.id  WHERE 1";
-
-if ($search) {
-    $sql .= " AND (apprenants.nom LIKE '%$search%' OR apprenants.prenom LIKE '%$search%' OR apprenants.cohorte LIKE '%$search%' OR presences.date_save LIKE '%$search%')";
-}elseif (empty($search)) {
-    $sql;
+$organizedData = [];   
+if ($result && $result->rowCount() > 0) {
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $date = $row['date_save']; 
+        if (!isset($organizedData[$date])) {
+            $organizedData[$date] = []; 
+        }
+        $organizedData[$date][] = $row; 
+    }
 }
-
-$sql .= " ORDER BY apprenants.nom ASC, apprenants.prenom ASC ";
-
-$result = $pdo->query($sql);
-
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -51,11 +43,11 @@ $result = $pdo->query($sql);
         </nav>
     </header>
     <section class="dark:bg-gray-900 p-3 sm:p-5">
-        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-            <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg">
+        <div class="mx-auto px-4 lg:px-12">
+            <div class="bg-white pb-5 w-12/12 dark:bg-gray-800 relative shadow-md sm:rounded-lg">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
-                    <form class="flex md:space-x-3" method="get">
+                        <form class="flex md:space-x-3" method="get">
                             <label for="simple-search" class="sr-only">Search</label>
                             <div class="relative w-full">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -84,47 +76,42 @@ $result = $pdo->query($sql);
                         </select>                     
                     </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-4 py-3">Prenom</th>
-                                <th scope="col" class="px-4 py-3">Nom</th>
-                                <th scope="col" class="px-4 py-3">Email</th>
-                                <th scope="col" class="px-4 py-3">Telephone</th>
-                                <th scope="col" class="px-4 py-3">Cohorte</th>
-                                <th scope="col" class="px-4 py-3">Satuts</th>
-                                <th scope="col" class="px-4 py-3">Date/Heure</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if ($result && $result->rowCount() > 0): ?>
-                                <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
-                                    <tr class="border-b dark:border-gray-700">
-                                <form action="showStudents.php" method="post">
-                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= htmlspecialchars($row['prenom']) ?></th>
-                                    <td class="px-4 py-3"><?= htmlspecialchars($row['nom']) ?></td>
-                                    <td class="px-4 py-3"><?= htmlspecialchars($row['email']) ?></td>
-                                    <td class="px-4 py-3"><?= htmlspecialchars($row['telephone']) ?></td>
-                                    <td class="px-4 py-3"><?= htmlspecialchars($row['cohorte']) ?></td>                                    
-                                    <td class="px-4 py-3"><?= htmlspecialchars($row['statuts']) ?></td>                                    
-                                    <td class="px-4 py-3"><?= htmlspecialchars($row['date_save']) ?></td>                                    
-                                </form>
-                            </tr>
-                                <?php endwhile; ?>
-                            <?php else: ?>
-                                <tr class="">
-                                    <td class=""></td>
-                                    <td class=""></td>
-                                    <td class=""></td>
-                                    <td class="text-center">Aucun résultat trouvé</td>
-                                </tr>
-                                
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                <div class="overflow-x-auto">                    
+                    <?php if (!empty($organizedData)): ?>
+                        <?php foreach ($organizedData as $date => $rows): ?>
+                            <h2 class="font-bold text-lg mt-10 mb-2 ml-4">Jour : <?= htmlspecialchars($date) ?></h2>
+                            <table class="w-full text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3">Prenom</th>
+                                        <th scope="col" class="px-4 py-3">Nom</th>
+                                        <th scope="col" class="px-4 py-3">Email</th>
+                                        <th scope="col" class="px-4 py-3">Telephone</th>
+                                        <th scope="col" class="px-4 py-3">Cohorte</th>
+                                        <th scope="col" class="px-4 py-3">Satuts</th>
+                                        <th scope="col" class="px-4 py-3">Heure</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-800">                               
+                                    <?php foreach ($rows as $row): ?>
+                                        <tr class="border-b dark:border-gray-700">                               
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['prenom']) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['nom']) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['email']) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['telephone']) ?></td>
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['cohorte']) ?></td>                                    
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['statuts']) ?></td>                                    
+                                            <td class="px-4 py-3"><?= htmlspecialchars($row['heure_save']) ?></td>                                 
+                                        </tr>                                    
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php endforeach; ?>
+                    <?php else: ?>                                
+                        <p class="text-center font-medium text-gray-700 dark:text-white">Aucun résultat trouvé.</p>
+                    <?php endif; ?>                                     
                 </div>
-        </div>
-        </section>
+            </div>
+    </section>
 </body>
 </html>

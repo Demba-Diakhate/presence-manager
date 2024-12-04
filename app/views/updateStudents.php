@@ -3,8 +3,6 @@ include_once ('../models/updateStudents.php');
 include_once ('../controllers/presenceControllers.php');
 $id_update = updateStudentsController();
 $recipe = updateStudents($id_update);
-
-
 ?>
 
 

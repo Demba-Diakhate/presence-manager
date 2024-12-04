@@ -1,56 +1,26 @@
 <?php 
-include ('../models/postHistoryAttendance.php');
+
+// Show all students
 include_once ('../controllers/presenceControllers.php');
 $apprenants = showStudentsController();
 
 
+// Post history attendance
 if(isset($_POST['submit'])){
-    if(
-        !isset($_POST['id_apprenant']) || !isset($_POST['statuts'])
-    ){
-        echo 'Remplir le formulaire.';
-        return;
-    }
-    
+    var_dump($_POST);
+    $postSubmit = $_POST['submit'];
     $id_apprenant = $_POST['id_apprenant'];
     $statuts = $_POST['statuts'];
-    $date_presence = date('Y-m-d H:i:s');
+    postHistoryAttendanceController($postSubmit, $id_apprenant, $statuts);
+};
 
-    postHistoryAttendance($id_apprenant, $statuts, $date_presence);
-    header("Location: showStudents.php"); 
-}
 
-try {
-    $pdo = new PDO('mysql:host=127.0.0.1;dbname=gestion_presence', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Connection failed: ' . $e->getMessage());
-}
-// Recherche et filtre
+// Search and Filter
 $search = $_GET['search'] ?? '';
 $filter = $_GET['filter'] ?? '';
+include_once('../models/search.php');
+$result = searchShowStudents($search, $filter);
 
-$sql = "SELECT * FROM apprenants WHERE 1";
-
-if ($search) {
-    $sql .= " AND (nom LIKE '%$search%' OR prenom LIKE '%$search%' OR cohorte LIKE '%$search%')";
-}elseif (empty($search)) {
-    $sql;
-}
-if ($filter) {
-    $sql .= " AND (cohorte LIKE '%$filter%')";
-}
-
-if ($filter) {
-    $sql .= " AND cohorte = '$filter'";
-}elseif (empty($filter)) {
-    $sql;
-}
-
-
-$sql .= " ORDER BY nom ASC, prenom ASC ";
-
-$result = $pdo->query($sql);
 
 ?>
 
@@ -73,7 +43,7 @@ $result = $pdo->query($sql);
         </nav>
     </header>
     <section class="dark:bg-gray-900 p-3 sm:p-5">
-        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div class="mx-auto px-4 lg:px-12">
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
@@ -191,7 +161,7 @@ $result = $pdo->query($sql);
                                             <td class="px-4 py-3"><?php echo $res['telephone']; ?></td>
                                             <td class="px-4 py-3"><?php echo $res['cohorte']; ?></td>
                                             <td class="px-4 py-3">
-                                                <select name="statuts" id="" class="border-none" required>
+                                                <select name="statuts" class="border-none" required>
                                                     <option value="">Prés.../Abs...</option>
                                                     <option value="present(e)">Present(e)</option>
                                                     <option value="absent(e)">Absent(e)</option>
