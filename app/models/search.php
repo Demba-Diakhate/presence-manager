@@ -1,7 +1,7 @@
 <?php 
 function searchHistoryAttendance($search){
     try {
-        $pdo = new PDO('mysql:host=127.0.0.1;dbname=app_gestion_presence', 'root', '');
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=gestion_presence', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         die('Connection failed: ' . $e->getMessage());
@@ -26,7 +26,7 @@ function searchHistoryAttendance($search){
 
 function searchShowStudents($search, $filter){
     try {
-        $pdo = new PDO('mysql:host=127.0.0.1;dbname=app_gestion_presence', 'root', '');
+        $pdo = new PDO('mysql:host=127.0.0.1;dbname=gestion_presence', 'root', '');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         die('Connection failed: ' . $e->getMessage());

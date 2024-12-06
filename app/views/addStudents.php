@@ -80,12 +80,12 @@ if(isset($_POST['send'])){
             </div>
             <!-- <button class="text-white md:ml-[68%] mx-auto bg-stone-500 p-3 w-1/5" type="submit" name="send">Ajouter</button> -->
             <div class="flex flex-row gap-3 justify-end mr-12">
-                <button class="text-white bg-stone-500 font-bold p-3 w-1/5" type="submit" name="send">Ajouter</button>
+                <button class="text-white bg-[#9e325d] font-bold p-3 w-1/5" type="submit" name="send">Ajouter</button>
                 <a href="./showStudents.php" class="text-black border border-black font-bold p-3 w-1/5">Annuler</a>
             </div>
 
         </form>
-        <div class="md:w-1/2 w-full p-10 bg-stone-500 flex justify-center items-center">
+        <div class="md:w-1/2 w-full p-10 bg-[#9e325d] flex justify-center items-center">
             <h2 class="text-3xl font-bold text-white md:mt-28 my-28 text-center">Ajouter un apprenant</h2>
         </div>
      </div>
