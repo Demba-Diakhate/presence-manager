@@ -7,17 +7,17 @@ function searchHistoryAttendance($search){
         die('Connection failed: ' . $e->getMessage());
     }
     // Recherche et filtre
-    $sql = "SELECT apprenants.prenom, apprenants.nom, apprenants.email, apprenants.telephone, apprenants.cohorte, presences.statuts, presences.date_save, presences.heure_save 
+    $sql = "SELECT apprenants.prenom, apprenants.nom, apprenants.email, apprenants.telephone, apprenants.cohorte, presences.statuts, presences.date_presence, presences.heure_save 
             FROM presences
             JOIN apprenants ON presences.id_apprenant = apprenants.id  WHERE 1";
     
     if ($search) {
-        $sql .= " AND (apprenants.nom LIKE '%$search%' OR apprenants.prenom LIKE '%$search%' OR apprenants.email LIKE '%$search%' OR apprenants.cohorte LIKE '%$search%' OR apprenants.telephone LIKE '%$search%' OR presences.statuts LIKE '%$search%' OR presences.date_save LIKE '%$search%')";
+        $sql .= " AND (apprenants.nom LIKE '%$search%' OR apprenants.prenom LIKE '%$search%' OR apprenants.email LIKE '%$search%' OR apprenants.cohorte LIKE '%$search%' OR apprenants.telephone LIKE '%$search%' OR presences.statuts LIKE '%$search%' OR presences.date_presence LIKE '%$search%')";
     }elseif (empty($search)) {
         $sql;
     }
     
-    $sql .= " ORDER BY apprenants.nom ASC, apprenants.prenom ASC ";
+    $sql .= " ORDER BY presences.date_presence DESC, apprenants.nom ASC, apprenants.prenom ASC";
     
     $result = $pdo->query($sql);
     return $result;

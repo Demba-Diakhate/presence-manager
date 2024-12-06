@@ -14,13 +14,17 @@ $result->execute();
 $organizedData = [];   
 if ($result && $result->rowCount() > 0) {
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        $date = $row['date_save']; 
+        $date = $row['date_presence']; 
         if (!isset($organizedData[$date])) {
             $organizedData[$date] = []; 
         }
         $organizedData[$date][] = $row; 
     }
 }
+
+// Récupérer le chemin de la page active
+$currentPage = basename($_SERVER['PHP_SELF']);
+
 ?>
 
 
@@ -33,12 +37,15 @@ if ($result && $result->rowCount() > 0) {
     <link rel="stylesheet" href="../../public/output.css">
 </head>
 <body class="bg-gray-50">
-    <header class="bg-stone-500 h-16 p-5">
+    <header class=" bg-fuchsia-900 h-20 p-5 flex justify-between items-center">
+        <div>
+            <img src="../../public/images/wommate.png" class="h-16" alt="Logo Wommate">
+        </div>
         <nav>
-            <ul class="flex justify-center items-center gap-4 text-white">
-                <li><a href="showStudents.php">Home</a></li>
-                <li><a href="historyAttendance.php">Historique</a></li>
-                <li><a href="addStudents.php">Ajout</a></li>
+            <ul class="flex justify-center items-center gap-5 text-white">
+                <li class="font-semibold <?= $currentPage === 'showStudents.php' ? ' text-white' : 'bg-fuchsia-800 border border-fuchsia-800 text-white' ?> px-4 py-2 rounded hover:bg-fuchsia-700 hover:ring-2 hover:ring-fuchsia-500"><a href="showStudents.php">Liste apprenants</a></li>
+                <li class="font-semibold <?= $currentPage === 'historyAttendance.php' ? 'bg-fuchsia-500 border border-fuchsia-500 text-white' : ' text-white' ?> px-4 py-2 rounded hover:ring-2 hover:ring-fuchsia-500"><a href="historyAttendance.php">Historique de présence</a></li>
+                <li class="flex items-center justify-center w-24 text-white bg-cyan-700 border border-cyan-700 hover:ring-2 hover:ring-cyan-500 font-medium rounded text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"><a href="addStudents.php">Ajouter</a></li>
             </ul>
         </nav>
     </header>
@@ -55,26 +62,12 @@ if ($result && $result->rowCount() > 0) {
                                         <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                     </svg>
                                 </div>
-                                <input type="text" id="simple-search" name="search" value="<?= htmlspecialchars($search) ?>"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" >
+                                <input type="text" id="simple-search" name="search" value="<?= htmlspecialchars($search) ?>"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-fuchsia-300 focus:border-fuchsia-300 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" >
                             </div>
                             <button type="submit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">Rechercher</button>
                         </form>
                     </div>
-                    <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                        <select id="filterDropdownButton" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
-                            <option value="">
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-4 w-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
-                                </svg>
-                                    Les cohortes
-                                <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                </svg>
-                            </option>
-                            <option value="cohorte1">Cohorte 1</option>
-                            <option value="cohorte2">Cohorte 2</option>
-                        </select>                     
-                    </div>
+                    
                 </div>
                 <div class="overflow-x-auto">                    
                     <?php if (!empty($organizedData)): ?>
