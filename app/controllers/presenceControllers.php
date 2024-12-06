@@ -12,11 +12,11 @@ function addStudentsController($prenom,$nom,$email,$telephone,$cohorte){
 
 }
 
-function postHistoryAttendanceController($postSubmit, $id_apprenant, $statuts){
+function postHistoryAttendanceController($postSubmit, $id_apprenant, $statuts, $date_presence){
     include_once('../models/postHistoryAttendance.php');
     if(isset($postSubmit)){
         if(
-            !isset($id_apprenant) || !isset($statuts)
+            !isset($id_apprenant) || !isset($statuts) || !isset($date_presence)
         ){
             echo 'Remplir le formulaire.';
             return;
