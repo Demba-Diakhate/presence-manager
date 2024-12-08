@@ -22,6 +22,8 @@ function postHistoryAttendanceController($postSubmit, $id_apprenant, $statuts, $
             return;
         }
         
+       
+        $date_presence = date('Y-m-d');
     
         postHistoryAttendance($id_apprenant, $statuts, $date_presence);
         header("Location: showStudents.php"); 

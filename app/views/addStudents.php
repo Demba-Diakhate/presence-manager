@@ -85,8 +85,9 @@ if(isset($_POST['send'])){
             </div>
 
         </form>
-        <div class="md:w-1/2 w-full p-10 bg-fuchsia-900 flex justify-center items-center">
-            <h2 class="text-3xl font-bold text-white md:mt-28 my-28 text-center">Ajouter un apprenant</h2>
+        <div class="md:w-1/2 w-full p-10 bg-fuchsia-900 flex flex-col gap-0 justify-center items-center">
+            <img src="../../public/images/wommate.png" class="w-5/6 h-48" alt="Wommate Technology">
+            <h2 class="text-3xl font-bold text-cyan-600 my-10 text-center">Inscrivez vous</h2>
         </div>
     </div>
 </body>
